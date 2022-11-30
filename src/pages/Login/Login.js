@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthProvider';
 import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
-    const {login} = useContext(AuthContext)
+    const {login } = useContext(AuthContext)
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginError, setLoginError] = useState('');
     const navigate = useNavigate();

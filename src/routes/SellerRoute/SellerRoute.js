@@ -4,20 +4,20 @@ import { AuthContext } from '../../context/AuthProvider';
 import useSeller from '../../hooks/useSeller';
 import Loading from '../../pages/shared/Loading/Loading';
 
-const PrivateRoute = ({children}) => {
-    const { user, loading } = useContext(AuthContext);
-    const [isSeller, isSellerLoading] = useSeller(user?.email)
+const SellerRoute = ({children}) => {
+    const { user, loading } =  useContext(AuthContext);
+    const [isSeller, isSellerLoading] =  useSeller(user?.email)
     const location = useLocation();
-
-    if (loading || isSellerLoading) {
+    console.log(isSeller)
+    if (loading) {
         return <Loading></Loading>
     }
-
+    
     if (user && isSeller) {
         return children;
     }
 
-    return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+    return <Navigate to="/login" ></Navigate>;
 };
 
-export default PrivateRoute;
+export default SellerRoute;

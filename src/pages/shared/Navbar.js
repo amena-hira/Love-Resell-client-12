@@ -13,6 +13,8 @@ const Navbar = () => {
     const menulist = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/addcategory'>Category</Link></li>
+        <li><Link to='/seller/addproduct'>Add Product</Link></li>
+        <li><Link to='/seller/myproducts'>My Products</Link></li>
     </>
     return (
         <div className='bg-pink-800 text-white'>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Category = ({ category }) => {
-    const { _id, categoryName, image } = category
+    const {  categoryName, image } = category
     return (
         <div className="card card-compact bg-base-100 shadow-xl">
             <figure><img src={image} alt="ImageFurniture" /></figure>

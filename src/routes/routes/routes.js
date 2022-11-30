@@ -6,6 +6,9 @@ import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
 import Register from "../../pages/Register/Register";
 import AddProduct from "../../pages/Seller/AddProduct/AddProduct";
+import MyProducts from "../../pages/Seller/MyProducts/MyProducts";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import SellerRoute from "../SellerRoute/SellerRoute";
 
 const routes = createBrowserRouter([
     {
@@ -36,8 +39,12 @@ const routes = createBrowserRouter([
         children:[
             {
                 path:'/seller/addproduct',
-                element: <AddProduct></AddProduct>
-            }
+                element: <PrivateRoute><AddProduct></AddProduct></PrivateRoute>
+            },
+            {
+                path:'/seller/myproducts',
+                element: <PrivateRoute><MyProducts></MyProducts></PrivateRoute>
+            },
         ]
     }
 ])

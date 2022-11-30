@@ -27,7 +27,6 @@ const AddCategory = () => {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json', 
-                        authorization: `bearer ${localStorage.getItem('accessToken')}`
                     },
                     body: JSON.stringify(category)
                 })
@@ -49,7 +48,7 @@ const AddCategory = () => {
                         <label className="label">
                             <span className="label-text">Category name</span>
                         </label>
-                        <input type="name" 
+                        <input type="text" 
                         {...register("name", {
                             required: "Category name is required"
                         })}
