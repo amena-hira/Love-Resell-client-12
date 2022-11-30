@@ -49,11 +49,11 @@ const routes = createBrowserRouter([
         children:[
             {
                 path:'/seller/addproduct',
-                element: <PrivateRoute><AddProduct></AddProduct></PrivateRoute>
+                element: <SellerRoute><AddProduct></AddProduct></SellerRoute>
             },
             {
                 path:'/seller/myproducts',
-                element: <PrivateRoute><MyProducts></MyProducts></PrivateRoute>
+                element: <SellerRoute><MyProducts></MyProducts></SellerRoute>
             },
         ]
     }
