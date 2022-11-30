@@ -2,9 +2,12 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/image/favicon.ico'
 import { AuthContext } from '../../context/AuthProvider';
+import useSeller from '../../hooks/useSeller';
+import Loading from './Loading/Loading';
 
 const Navbar = () => {
     const {user, logout} = useContext(AuthContext);
+    const [isSeller] =  useSeller(user?.email)
     const handleLogout = () =>{
         logout()
         .then(()=>{})
@@ -13,9 +16,18 @@ const Navbar = () => {
     const menulist = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/addcategory'>Category</Link></li>
-        <li><Link to='/seller/addproduct'>Add Product</Link></li>
-        <li><Link to='/seller/myproducts'>My Products</Link></li>
+        {
+            isSeller && user &&
+            <>
+                <li><Link to='/seller/addproduct'>Add Product</Link></li>
+                <li><Link to='/seller/myproducts'>My Products</Link></li>
+            </>
+        }
+
     </>
+
+
+    
     return (
         <div className='bg-pink-800 text-white'>
             <div className='max-w-6xl mx-auto py-3'>

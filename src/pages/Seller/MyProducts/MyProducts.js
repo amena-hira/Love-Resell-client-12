@@ -36,7 +36,7 @@ const MyProducts = () => {
     }
     return (
         <div>
-            <Toaster></Toaster>
+            
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
@@ -85,6 +85,7 @@ const MyProducts = () => {
                 successButtonName="Ok"
                 modalData={availableStatusProduct}
             ></Modal>
+            <Toaster></Toaster>
 
         </div>
     );

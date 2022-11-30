@@ -5,7 +5,7 @@ import useSeller from '../../hooks/useSeller';
 import Loading from '../../pages/shared/Loading/Loading';
 
 const SellerRoute = ({children}) => {
-    const { user, loading } =   useContext(AuthContext);
+    const { user, loading, logout } =   useContext(AuthContext);
     const [isSeller, isSellerLoading] =  useSeller(user?.email)
     const location = useLocation();
     console.log(isSeller)
@@ -15,6 +15,9 @@ const SellerRoute = ({children}) => {
     
     if (user && isSeller) {
         return children;
+    }
+    if (!isSeller) {
+        logout()
     }
 
     return <Navigate to="/login" ></Navigate>;

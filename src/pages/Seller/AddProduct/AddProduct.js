@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthProvider';
-import toast,{Toaster} from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
+import swal from 'sweetalert';
 
 const AddProduct = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -54,7 +54,7 @@ const AddProduct = () => {
                     postTime: date,
                     availableStatus: 'available'
                 }
-                fetch('http://localhost:5000/products',{
+                fetch(`http://localhost:5000/products?email=${user.email}`,{
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json', 
@@ -65,11 +65,11 @@ const AddProduct = () => {
                 .then(result =>{
                     console.log(result);
                     if (result.acknowledged) {
-                        toast.success('Product Added Successfully!');
+                        swal("Product Added Successfully!","","success");
                         navigate('/seller/myproducts')
                     }
-                    else{
-                        toast.error(result.message);
+                    else {
+                        
                     }
                 })
             }
@@ -78,7 +78,7 @@ const AddProduct = () => {
     }
     return (
         <div className='flex justify-center pt-12 px-2 '>
-            <Toaster></Toaster>
+            
             <div className="card flex-shrink-0 w-full max-w-4xl shadow-2xl bg-base-100 drop-shadow-2xl">
                 <h2 className='text-center mt-8 text-4xl'>Add Category</h2>
                 <form onSubmit={handleSubmit(handleProductSubmit)} className=" card-body grid grid-cols-2 lg:grid-cols-3">
