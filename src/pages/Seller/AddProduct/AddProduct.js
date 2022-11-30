@@ -41,7 +41,7 @@ const AddProduct = () => {
                 const productData = {
                     category:data.category,
                     sellerName: data.sellerName,
-                    phone: data.phone,
+                    email: data.email,
                     location: data.location,
                     name: data.name,
                     description: data.description,
@@ -90,19 +90,19 @@ const AddProduct = () => {
                             {...register("sellerName", {
                                 required: "Seller Name is required"
                             })}
-                            placeholder="Seller Name" defaultValue={user?.displayName} className="input input-bordered" />
+                            placeholder="Seller Name" defaultValue={user?.displayName} className="input input-bordered" readOnly/>
                         {errors.sellerName && <p className='text-error'>{errors.sellerName?.message}</p>}
                     </div>
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Mobile Number</span>
+                            <span className="label-text">Seller Email</span>
                         </label>
-                        <input type="text"
-                            {...register("phone", {
-                                required: "Seller phone is required"
+                        <input type="email"
+                            {...register("email", {
+                                required: "Seller email is required"
                             })}
-                            placeholder="Seller phone" className="input input-bordered" />
-                        {errors.phone && <p className='text-error'>{errors.phone?.message}</p>}
+                            placeholder="Seller email" className="input input-bordered" defaultValue={user?.email} readOnly/>
+                        {errors.email && <p className='text-error'>{errors.email?.message}</p>}
                     </div>
                     <div className="form-control">
                         <label className="label">

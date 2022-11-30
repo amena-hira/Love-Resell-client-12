@@ -6,9 +6,7 @@ import toast,{Toaster} from 'react-hot-toast';
 
 const MyProducts = () => {
     const [availableStatusProduct, setAvailableStatusProduct] = useState(null);
-    // const closeModal = () => {
-    //     setAvailableStatusProduct(null);
-    // }
+    
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
