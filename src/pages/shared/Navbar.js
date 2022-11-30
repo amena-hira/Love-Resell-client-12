@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/image/favicon.ico'
+import { AuthContext } from '../../context/AuthProvider';
 
 const Navbar = () => {
+    const {user, logout} = useContext(AuthContext);
+    const handleLogout = () =>{
+        logout()
+        .then(()=>{})
+        .catch(error=>console.log(error))
+    }
     const menulist = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/addcategory'>Category</Link></li>
@@ -20,7 +27,7 @@ const Navbar = () => {
                                 {menulist}
                             </ul>
                         </div>
-                        <Link className="btn btn-ghost normal-case text-xl">
+                        <Link className="btn btn-ghost normal-case text-xl" to='/'>
                             <img className='rounded-full mx-2' src={logo} alt="" />
                             Love Resell
                         </Link>
@@ -32,7 +39,12 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <Link href="">Login</Link>
+                        {
+                            user?
+                            <Link onClick={handleLogout}>Logout</Link>
+                            :
+                            <Link to='/login'>Login</Link>
+                        }
                     </div>
                 </div>
             </div>
