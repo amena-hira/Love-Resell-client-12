@@ -4,6 +4,7 @@ import SellerLayout from "../../layout/Seller/SellerLayout";
 import AddCategory from "../../pages/AddCategory/AddCategory";
 import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
+import Products from "../../pages/Products/Products";
 import Register from "../../pages/Register/Register";
 import AddProduct from "../../pages/Seller/AddProduct/AddProduct";
 import MyProducts from "../../pages/Seller/MyProducts/MyProducts";
@@ -30,6 +31,14 @@ const routes = createBrowserRouter([
             {
                 path: '/addcategory',
                 element: <AddCategory></AddCategory>
+            },
+            {
+                path: '/product',
+                element: <AddCategory></AddCategory>
+            },
+            {
+                path: '/products',
+                element: <Products></Products>
             }
         ]
     },

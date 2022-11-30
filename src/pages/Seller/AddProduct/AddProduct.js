@@ -1,16 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthProvider';
 import toast,{Toaster} from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import Axios from 'axios';
 
 const AddProduct = () => {
-    const { register, formState: { errors }, handleSubmit, reset  } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const {user} = useContext(AuthContext)
     const imageHostKey = process.env.REACT_APP_imgbb_key;
-    const getDate = new Date();
     const date = new Date().toLocaleString();
+    const navigate = useNavigate();
+    const [categories, setCategories] = useState([]);
 
-    const handleProductSubmit = (data,event) => {
+    useEffect(()=>{
+        Axios.get('http://localhost:5000/category')
+        .then(res => {
+            console.log("axios: ",res.data);
+            setCategories(res.data)
+        })
+        .catch(error => console.log(error))
+    },[])
+    
+
+    const handleProductSubmit = (data) => {
         console.log(data);
         const image = data.image[0];
         const formData = new FormData();
@@ -26,6 +39,7 @@ const AddProduct = () => {
             if (imageData.success){
                 console.log(imageData.data.url)
                 const productData = {
+                    category:data.category,
                     sellerName: data.sellerName,
                     phone: data.phone,
                     location: data.location,
@@ -37,7 +51,8 @@ const AddProduct = () => {
                     originalPrice: data.originalPrice,
                     useOfYears: data.useOfYears,
                     productCondition: data.productCondition,
-                    postTime: date
+                    postTime: date,
+                    availableStatus: 'available'
                 }
                 fetch('http://localhost:5000/products',{
                     method: 'POST',
@@ -51,7 +66,7 @@ const AddProduct = () => {
                     console.log(result);
                     if (result.acknowledged) {
                         toast.success('Product Added Successfully!');
-                        event.target.reset()
+                        navigate('/seller/myproducts')
                     }
                     else{
                         toast.error(result.message);
@@ -189,6 +204,25 @@ const AddProduct = () => {
                             <option value="fair">Fair</option>
                         </select>
                         {errors.productCondition && <p className='text-error'>{errors.productCondition?.message}</p>}
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Category</span>
+                        </label>
+                        <select {...register("category", {
+                                required: "Product Condition is required"
+                            })} className="select select-bordered">
+                            {
+                                categories.map(category =>
+                                <option 
+                                key={category._id}
+                                value={category._id}>
+                                    {category.categoryName}
+                                </option>
+                                )
+                            }
+                        </select>
+                        {errors.category && <p className='text-error'>{errors.category?.message}</p>}
                     </div>
                     
                     <div className="form-control">
