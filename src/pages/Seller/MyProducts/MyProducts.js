@@ -31,6 +31,9 @@ const MyProducts = () => {
 
 
     }
+    const handleAdvertiseStatus = product =>{
+
+    }
     if (isLoading) {
         return <Loading></Loading>
     }
@@ -70,7 +73,7 @@ const MyProducts = () => {
                                     }
 
                                 </td>
-                                <td><label htmlFor="modal" className="btn btn-sm bg-pink-900 border-none hover:bg-pink-600 text-white">Advertise</label></td>
+                                <td><label onClick={() => setAvailableStatusProduct(product)} htmlFor="modal" className="btn btn-sm bg-pink-900 border-none hover:bg-pink-600 text-white">Advertise</label></td>
                             </tr>)
                         }
 
@@ -85,7 +88,7 @@ const MyProducts = () => {
                 successButtonName="Ok"
                 modalData={availableStatusProduct}
             ></Modal>
-            <Toaster></Toaster>
+            
 
         </div>
     );

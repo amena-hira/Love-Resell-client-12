@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-import swal from 'sweetalert';
+import toast from 'react-hot-toast';
 
 const AddProduct = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -65,7 +65,7 @@ const AddProduct = () => {
                 .then(result =>{
                     console.log(result);
                     if (result.acknowledged) {
-                        swal("Product Added Successfully!","","success");
+                        toast.success("Product Added Successfully!")
                         navigate('/seller/myproducts')
                     }
                     else {
