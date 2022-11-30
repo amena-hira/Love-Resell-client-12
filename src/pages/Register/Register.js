@@ -15,14 +15,32 @@ const Register = () => {
         setRegisterError('');
         createUser(data.email, data.password)
             .then(result => {
-                const user = result.user;
-                console.log(user);
+                console.log(result)
                 const profile = {
                     displayName: data.name
                 }
                 updateUserProfile(profile)
-                logout()
-                navigate('/login');
+                const user = {
+                    name: data.name,
+                    email: data.email,
+                    status: data.status
+                }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    body: JSON.stringify(user)
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        console.log(result);
+                        if (result.acknowledged) {
+                            logout()
+                            navigate('/login');
+                        }
+                    })
+
 
             })
             .catch(error => {
@@ -62,6 +80,24 @@ const Register = () => {
                             className="input input-bordered w-full max-w-xl"
                         />
                         {errors.email && <p className='text-error' role="alert">{errors.email?.message}</p>}
+                    </div>
+                    <div className="form-control w-full max-w-xl">
+                        <label className="label">
+                            <span className="label-text">Status</span>
+                        </label>
+                        <div className='flex justify-around'>
+                            <>
+                                <input type="radio"
+                                    {...register("status")}
+                                    name="radio-2" defaultValue='buyer' className="radio radio-primary" checked /><label htmlFor="">Buyer</label>
+                            </>
+                            <>
+                                <input type="radio"
+                                    {...register("status")}
+                                    name="radio-2" defaultValue='seller' className="radio radio-primary" /><label htmlFor="">Seller</label>
+                            </>
+                        </div>
+
                     </div>
                     <div className="form-control w-full max-w-xl">
                         <label className="label">
