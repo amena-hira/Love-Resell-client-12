@@ -9,7 +9,7 @@ const Navbar = () => {
     const {user, logout} = useContext(AuthContext);
     const [isSeller] =  useSeller(user?.email)
     const [isAdmin] = useAdmin(user?.email)
-    
+
     const handleLogout = () =>{
         logout()
         .then(()=>{})
@@ -36,9 +36,9 @@ const Navbar = () => {
         {
             isAdmin && user &&
             <>
-                <li><Link to='/seller/allsalers'>All Salers</Link></li>
-                <li><Link to='/seller/allusers'>All Users</Link></li>
-                <li><Link to='/seller/reporteditems'>Reported Items</Link></li>
+                <li><Link to='/admin/allsellers'>All Sellers</Link></li>
+                <li><Link to='/admin/allusers'>All Users</Link></li>
+                <li><Link to='/admin/reporteditems'>Reported Items</Link></li>
             </>
         }
         

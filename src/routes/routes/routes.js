@@ -3,6 +3,8 @@ import AdminLayout from "../../layout/Admin/AdminLayout";
 import Main from "../../layout/Main/Main";
 import SellerLayout from "../../layout/Seller/SellerLayout";
 import AddCategory from "../../pages/AddCategory/AddCategory";
+import AllSellers from "../../pages/Admin/AllSellers/AllSellers";
+
 import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
 import Products from "../../pages/Products/Products";
@@ -64,7 +66,8 @@ const routes = createBrowserRouter([
         element: <AdminRoute><AdminLayout></AdminLayout></AdminRoute>,
         children: [
             {
-                path: '/admin/allsalers'
+                path: '/admin/allsellers',
+                element:<AdminRoute><AllSellers></AllSellers></AdminRoute>
             }
         ]
     }
