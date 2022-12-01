@@ -210,13 +210,11 @@ const AddProduct = () => {
                             <span className="label-text">Category</span>
                         </label>
                         <select {...register("category", {
-                                required: "Product Condition is required"
+                                required: "Product category is required"
                             })} className="select select-bordered">
                             {
                                 categories.map(category =>
-                                <option 
-                                key={category._id}
-                                value={category._id}>
+                                <option value={`${category._id}`}>
                                     {category.categoryName}
                                 </option>
                                 )

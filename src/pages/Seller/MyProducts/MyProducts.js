@@ -1,16 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Loading from '../../shared/Loading/Loading';
 import Modal from '../../shared/Modal/Modal';
 import toast from 'react-hot-toast';
+import { AuthContext } from '../../../context/AuthProvider';
 
 const MyProducts = () => {
     const [availableStatusProduct, setAvailableStatusProduct] = useState(null);
+    const {user} = useContext(AuthContext)
     
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/products');
+            const res = await fetch(`http://localhost:5000/products/seller?email=${user?.email}`);
             const data = await res.json();
             return data;
         }

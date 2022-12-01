@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import Loading from '../../shared/Loading/Loading';
 import Modal from '../../shared/Modal/Modal';
+import toast from 'react-hot-toast'; 
 
 const AllSellers = () => {
     const [isDelete, setIsDelete] = useState(null);
-    const { data: users = [], isLoading } = useQuery({
+    const { data: users = [], isLoading, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/users/sellers');
@@ -19,6 +20,17 @@ const AllSellers = () => {
     }
     const handleSellerVerify = (user) =>{
         console.log(user)
+        fetch(`http://localhost:5000/users/sellers/${user._id}`,{
+            method: 'PUT'
+        })
+        .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount > 0) {
+                    toast.success(`${user.name} is verified!`)
+                    refetch();
+                }
+            })
     }
     if (isLoading) {
         return <Loading></Loading>
@@ -44,10 +56,15 @@ const AllSellers = () => {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>
-                                        <label onClick={()=>handleSellerVerify(user)} className="btn btn-sm bg-pink-600 border-none hover:bg-pink-800 text-white">Verify</label>
+                                        {
+                                            user.verify ?
+                                            <div className="badge badge-lg bg-pink-600 border-none">Verified</div>
+                                            :
+                                            <label onClick={()=>handleSellerVerify(user)} className="btn btn-sm">Verify</label>
+                                        }
                                     </td>
                                     <td>
-                                        <label htmlFor='modal' onClick={()=> setIsDelete(user)} className="btn btn-sm btn-error">Delete</label>
+                                        <label htmlFor='modal' onClick={()=> setIsDelete(user)} className="btn btn-sm btn-error ">Delete</label>
                                     </td>
                                 </tr>)
                         }

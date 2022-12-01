@@ -16,15 +16,12 @@ const Register = () => {
         createUser(data.email, data.password)
             .then(result => {
                 console.log(result)
-                const profile = {
-                    displayName: data.name
-                }
-                updateUserProfile(profile)
                 const user = {
                     name: data.name,
                     email: data.email,
                     status: data.status
                 }
+                console.log('inside firebase result: ', user)
                 fetch('http://localhost:5000/users', {
                     method: 'POST',
                     headers: {
@@ -40,6 +37,13 @@ const Register = () => {
                             navigate('/login');
                         }
                     })
+                const profile = {
+                    displayName: data.name
+                }
+                updateUserProfile(profile)
+                .then(() => {})
+                .catch(error=>console.log(error))
+                
 
 
             })
@@ -89,12 +93,12 @@ const Register = () => {
                             <>
                                 <input type="radio"
                                     {...register("status")}
-                                    name="radio-2" defaultValue='buyer' className="radio radio-primary" checked /><label htmlFor="">Buyer</label>
+                                    defaultValue='buyer' className="radio radio-primary" checked /><label htmlFor="">Buyer</label>
                             </>
                             <>
                                 <input type="radio"
                                     {...register("status")}
-                                    name="radio-2" defaultValue='seller' className="radio radio-primary" /><label htmlFor="">Seller</label>
+                                    defaultValue='seller' className="radio radio-primary" /><label htmlFor="">Seller</label>
                             </>
                         </div>
 
