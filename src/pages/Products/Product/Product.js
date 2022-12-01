@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { FaCheck } from "react-icons/fa";
 const Product = ({ product }) => {
-    const { _id, image, name, location, resalePrice, originalPrice, useOfYears, postTime, sellerName } = product
+    const { _id, image, name, location, resalePrice, originalPrice, useOfYears, postTime, sellerName, email } = product;
+    const [isVerify, setIsVerify] = useState(null);
+    useEffect(()=>{
+        fetch(`http://localhost:5000/products/verify?email=${email}`)
+        .then(res=>res.json())
+        .then(data=> {
+            setIsVerify(data.isVerify)
+        })
+    },[email])
     return (
         <div className="card bg-base-100 shadow-xl ">
             <figure className='h-60'><img src={image} alt="" /></figure>
@@ -14,7 +22,13 @@ const Product = ({ product }) => {
                         </div>
                     </div>
                     <div>
-                        <p>{sellerName}</p>
+                        <div className='flex'>
+                            <span>{sellerName}</span>
+                            {
+                                isVerify &&
+                                <div className='text-white p-1 rounded-full bg-blue-500 '><FaCheck></FaCheck></div>
+                            }
+                        </div>
                         <p>{postTime}</p>
                         <p className='uppercase'>{location}</p>
                     </div>
