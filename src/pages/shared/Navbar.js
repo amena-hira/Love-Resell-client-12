@@ -2,11 +2,14 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/image/favicon.ico'
 import { AuthContext } from '../../context/AuthProvider';
+import useAdmin from '../../hooks/useAdmin';
 import useSeller from '../../hooks/useSeller';
 
 const Navbar = () => {
     const {user, logout} = useContext(AuthContext);
     const [isSeller] =  useSeller(user?.email)
+    const [isAdmin] = useAdmin(user?.email)
+    
     const handleLogout = () =>{
         logout()
         .then(()=>{})
@@ -16,7 +19,7 @@ const Navbar = () => {
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/addcategory'>Category</Link></li>
         {
-            user && !isSeller &&
+            user && !isSeller && !isAdmin &&
             <>
                 <li><Link to='/myorders'>My Orders</Link></li>
                 <li><Link to='/mywishlists'>My Wishlist</Link></li>
@@ -28,6 +31,14 @@ const Navbar = () => {
                 <li><Link to='/seller/addproduct'>Add Product</Link></li>
                 <li><Link to='/seller/myproducts'>My Products</Link></li>
                 <li><Link to='/seller/mybuyers'>My Buyers</Link></li>
+            </>
+        }
+        {
+            isAdmin && user &&
+            <>
+                <li><Link to='/seller/allsalers'>All Salers</Link></li>
+                <li><Link to='/seller/allusers'>All Users</Link></li>
+                <li><Link to='/seller/reporteditems'>Reported Items</Link></li>
             </>
         }
         
@@ -67,6 +78,7 @@ const Navbar = () => {
                             :
                             <Link to='/login'>Login</Link>
                         }
+                        
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import AdminLayout from "../../layout/Admin/AdminLayout";
 import Main from "../../layout/Main/Main";
 import SellerLayout from "../../layout/Seller/SellerLayout";
 import AddCategory from "../../pages/AddCategory/AddCategory";
@@ -8,6 +9,7 @@ import Products from "../../pages/Products/Products";
 import Register from "../../pages/Register/Register";
 import AddProduct from "../../pages/Seller/AddProduct/AddProduct";
 import MyProducts from "../../pages/Seller/MyProducts/MyProducts";
+import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import SellerRoute from "../SellerRoute/SellerRoute";
 
@@ -55,6 +57,15 @@ const routes = createBrowserRouter([
                 path:'/seller/myproducts',
                 element: <SellerRoute><MyProducts></MyProducts></SellerRoute>
             },
+        ]
+    },
+    {
+        path:'/admin',
+        element: <AdminRoute><AdminLayout></AdminLayout></AdminRoute>,
+        children: [
+            {
+                path: '/admin/allsalers'
+            }
         ]
     }
 ])
