@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import BookingModal from './BookingModal/BookingModal';
 import Product from './Product/Product';
 
 
 const Products = () => {
     const products = useLoaderData()
-    console.log(products.length);
+    const[selectedProduct, setSelectedProduct] = useState(null)
+    
     return (
         <div className='max-w-6xl mx-auto my-12 px-2'>
             {
@@ -14,12 +16,20 @@ const Products = () => {
                     {products.map(product => <Product 
                     key={product._id}
                     product={product}
+                    setSelectedProduct={setSelectedProduct}
                     ></Product>)}
 
                 </div>
                 
                 :
                 <h2 className='text-center my-8'>No Products Added Yet!!</h2>
+            }
+            {
+                selectedProduct &&
+                <BookingModal
+                selectedProduct={selectedProduct}
+                setSelectedProduct={setSelectedProduct}
+                ></BookingModal>
             }
         </div>
     );

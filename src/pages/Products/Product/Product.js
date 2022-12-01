@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FaCheck } from "react-icons/fa";
-const Product = ({ product }) => {
+import './Product.css';
+
+const Product = ({ product, setSelectedProduct}) => {
     const { _id, image, name, location, resalePrice, originalPrice, useOfYears, postTime, sellerName, email } = product;
     const [isVerify, setIsVerify] = useState(null);
+
     useEffect(()=>{
         fetch(`http://localhost:5000/products/verify?email=${email}`)
         .then(res=>res.json())
@@ -11,6 +13,8 @@ const Product = ({ product }) => {
             setIsVerify(data.isVerify)
         })
     },[email])
+
+
     return (
         <div className="card bg-base-100 shadow-xl ">
             <figure className='h-60'><img src={image} alt="" /></figure>
@@ -26,7 +30,7 @@ const Product = ({ product }) => {
                             <span>{sellerName}</span>
                             {
                                 isVerify &&
-                                <div className='text-white p-1 rounded-full bg-blue-500 '><FaCheck></FaCheck></div>
+                                <div className='p-1'><FaCheck className='verify-mark'></FaCheck></div>
                             }
                         </div>
                         <p>{postTime}</p>
@@ -39,7 +43,7 @@ const Product = ({ product }) => {
                 <p>Original Price: ${originalPrice}</p>
                 <p>Use of Years: {useOfYears}years</p>
                 <div className="card-actions justify-end">
-                    <Link className="btn border-none bg-red-100 text-black">Book Now</Link>
+                    <label htmlFor='modal' onClick={()=>setSelectedProduct(product)} className="btn border-none bg-red-100 text-black">Book Now</label>
                 </div>
             </div>
         </div>
