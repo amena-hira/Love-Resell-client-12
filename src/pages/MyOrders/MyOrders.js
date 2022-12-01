@@ -1,0 +1,47 @@
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../context/AuthProvider';
+import Loading from '../shared/Loading/Loading';
+
+const MyOrders = () => {
+    const {user} = useContext(AuthContext);
+    const { data: orders = [], isLoading } = useQuery({
+        queryKey: ['orders'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/orders?email=${user.email}`);
+            const data = await res.json();
+            return data;
+        }
+    });
+    if (isLoading) {
+        return <Loading></Loading>
+    }
+    return (
+        <div className='max-w-6xl mx-auto my-12'>
+            <div className="overflow-x-auto">
+                <table className="table w-full">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            orders.map((order,i) => <tr className='hover' key={i}>
+                                <th>{i+1}</th>
+                                <td>{order.productName}</td>
+                                <td>${order.productPrice}</td>
+                                <td><label htmlFor='modal' className="btn btn-sm btn-error ">Pay</label></td>
+                            </tr>)
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+};
+
+export default MyOrders;
