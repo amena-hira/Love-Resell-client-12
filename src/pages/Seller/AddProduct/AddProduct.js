@@ -53,7 +53,6 @@ const AddProduct = () => {
                     productCondition: data.productCondition,
                     postTime: date,
                     availableStatus: 'available',
-                    
                 }
                 fetch(`http://localhost:5000/products?email=${user.email}`,{
                     method: 'POST',

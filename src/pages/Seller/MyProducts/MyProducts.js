@@ -14,6 +14,7 @@ const MyProducts = () => {
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/products/seller?email=${user?.email}`);
             const data = await res.json();
+            console.log(data);
             return data;
         }
     });
@@ -61,6 +62,7 @@ const MyProducts = () => {
                             <th>Product Image</th>
                             <th>Product Name</th>
                             <th>Product Price</th>
+                            <th>Product Order Status</th>
                             <th>Product Status</th>
                             <th>Advertise</th>
                         </tr>
@@ -78,6 +80,13 @@ const MyProducts = () => {
                                 </td>
                                 <td>{product.name}</td>
                                 <td>{product.resalePrice}</td>
+                                <td>{
+                                    product.paid ?
+                                    <span className="badge bg-red-100 py-1 border-none text-black">Ordered & Paid</span>
+                                    :
+                                    <span className="badge bg-red-200 py-1 border-none">Order or paid not yet</span>
+                                    
+                                }</td>
                                 <td>
                                     {product.availableStatus==='sold' ?
                                         <label className="text-pink-700 text-center uppercase text-xl">{product.availableStatus}</label>
