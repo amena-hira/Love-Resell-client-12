@@ -23,6 +23,7 @@ const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
             email,
             phone,
             meetLocation,
+            paid: false
         }
         fetch('http://localhost:5000/orders', {
             method: 'POST',

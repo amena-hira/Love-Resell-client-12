@@ -52,7 +52,8 @@ const AddProduct = () => {
                     useOfYears: data.useOfYears,
                     productCondition: data.productCondition,
                     postTime: date,
-                    availableStatus: 'available'
+                    availableStatus: 'available',
+                    
                 }
                 fetch(`http://localhost:5000/products?email=${user.email}`,{
                     method: 'POST',

@@ -31,7 +31,7 @@ const Home = () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-2 lg:mx-0'>
                     {
                         products.map(product =>
-                            product.advertise && product.availableStatus === 'available' && 
+                            product.advertise && product.availableStatus === 'available' && !product.paid  &&
                             <Advertise key={product._id} product={product}></Advertise>
                         )
                     }

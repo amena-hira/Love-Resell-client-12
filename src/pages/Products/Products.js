@@ -13,7 +13,9 @@ const Products = () => {
             {
                 products.length>0?
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                    {products.map(product => <Product 
+                    {products.map(product => 
+                    product.availableStatus === 'available' && !product.paid &&
+                    <Product 
                     key={product._id}
                     product={product}
                     setSelectedProduct={setSelectedProduct}

@@ -23,8 +23,17 @@ const MyOrders = () => {
             .then(data => {
                 console.log(data)
                 if (data.modifiedCount > 0) {
-                    toast.success(`${order.productName} is successfully paid!`)
-                    refetch();
+                    fetch(`http://localhost:5000/product/order/${order.productId}`,{
+                        method: 'PUT'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        toast.success(`${order.productName} is successfully paid!`)
+                        refetch();
+                    })
+                    
+                    
                 }
             })
     }
@@ -52,9 +61,9 @@ const MyOrders = () => {
                                 <td>
                                     {
                                         order.paid ?
-                                        <label className="btn btn-sm border-none bg-red-100">Paid</label>
-                                        :
-                                        <label onClick={() => handlePayment(order)} className="btn btn-sm border-none bg-pink-800">Pay</label>
+                                            <label className="btn btn-sm border-none bg-red-100">Paid</label>
+                                            :
+                                            <label onClick={() => handlePayment(order)} className="btn btn-sm border-none bg-pink-800">Pay</label>
                                     }
                                 </td>
                             </tr>)
