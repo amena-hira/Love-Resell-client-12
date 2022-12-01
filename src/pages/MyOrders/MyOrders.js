@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 import Loading from '../shared/Loading/Loading';
+import toast from 'react-hot-toast';
 
 const MyOrders = () => {
-    const {user} = useContext(AuthContext);
-    const { data: orders = [], isLoading } = useQuery({
+    const { user } = useContext(AuthContext);
+    const { data: orders = [], isLoading, refetch } = useQuery({
         queryKey: ['orders'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/orders?email=${user.email}`);
@@ -13,13 +14,27 @@ const MyOrders = () => {
             return data;
         }
     });
+    const handlePayment = (order) => {
+        console.log(order._id)
+        fetch(`http://localhost:5000/orders/${order._id}`, {
+            method: 'PUT'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount > 0) {
+                    toast.success(`${order.productName} is successfully paid!`)
+                    refetch();
+                }
+            })
+    }
     if (isLoading) {
         return <Loading></Loading>
     }
     return (
         <div className='max-w-6xl mx-auto my-12'>
             <div className="overflow-x-auto">
-                <table className="table w-full">
+                <table className="table w-full text-center">
                     <thead>
                         <tr>
                             <th></th>
@@ -30,11 +45,18 @@ const MyOrders = () => {
                     </thead>
                     <tbody>
                         {
-                            orders.map((order,i) => <tr className='hover' key={i}>
-                                <th>{i+1}</th>
+                            orders.map((order, i) => <tr className='hover' key={i}>
+                                <th>{i + 1}</th>
                                 <td>{order.productName}</td>
                                 <td>${order.productPrice}</td>
-                                <td><label htmlFor='modal' className="btn btn-sm btn-error ">Pay</label></td>
+                                <td>
+                                    {
+                                        order.paid ?
+                                        <label className="btn btn-sm border-none bg-red-100">Paid</label>
+                                        :
+                                        <label onClick={() => handlePayment(order)} className="btn btn-sm border-none bg-pink-800">Pay</label>
+                                    }
+                                </td>
                             </tr>)
                         }
                     </tbody>

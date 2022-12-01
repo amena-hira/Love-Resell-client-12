@@ -17,7 +17,19 @@ const AllSellers = () => {
 
     const handleUserDelete = (user) =>{
         console.log(user)
+        fetch(`http://localhost:5000/users/${user._id}`,{
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if (data.acknowledged) {
+                toast.success(`${user.name} is deleted!`)
+                refetch();
+            }
+        })
     }
+
     const handleSellerVerify = (user) =>{
         console.log(user)
         fetch(`http://localhost:5000/users/sellers/${user._id}`,{
