@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import Loading from '../../shared/Loading/Loading';
 import Modal from '../../shared/Modal/Modal';
-import toast,{Toaster} from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const MyProducts = () => {
     const [availableStatusProduct, setAvailableStatusProduct] = useState(null);
@@ -32,7 +32,18 @@ const MyProducts = () => {
 
     }
     const handleAdvertiseStatus = product =>{
-
+        console.log(product)
+        fetch(`http://localhost:5000/product/advertise/${product?._id}`, {
+            method: 'PUT'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount > 0) {
+                    toast.success(`${product.name} is going to advertise!!`)
+                    refetch();
+                }
+            })
     }
     if (isLoading) {
         return <Loading></Loading>
@@ -73,7 +84,7 @@ const MyProducts = () => {
                                     }
 
                                 </td>
-                                <td><label onClick={() => setAvailableStatusProduct(product)} htmlFor="modal" className="btn btn-sm bg-pink-900 border-none hover:bg-pink-600 text-white">Advertise</label></td>
+                                <td><label onClick={() => handleAdvertiseStatus(product)} className="btn btn-sm bg-pink-900 border-none hover:bg-pink-600 text-white">Advertise</label></td>
                             </tr>)
                         }
 

@@ -5,7 +5,7 @@ import Product from './Product/Product';
 
 const Products = () => {
     const products = useLoaderData()
-    console.log(products);
+    console.log(products.length);
     return (
         <div className='max-w-6xl mx-auto my-12 px-2'>
             {

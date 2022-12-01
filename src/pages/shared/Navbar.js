@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/image/favicon.ico'
 import { AuthContext } from '../../context/AuthProvider';
 import useSeller from '../../hooks/useSeller';
-import Loading from './Loading/Loading';
 
 const Navbar = () => {
     const {user, logout} = useContext(AuthContext);
@@ -17,12 +16,21 @@ const Navbar = () => {
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/addcategory'>Category</Link></li>
         {
+            user && !isSeller &&
+            <>
+                <li><Link to='/myorders'>My Orders</Link></li>
+                <li><Link to='/mywishlists'>My Wishlist</Link></li>
+            </>
+        }
+        {
             isSeller && user &&
             <>
                 <li><Link to='/seller/addproduct'>Add Product</Link></li>
                 <li><Link to='/seller/myproducts'>My Products</Link></li>
+                <li><Link to='/seller/mybuyers'>My Buyers</Link></li>
             </>
         }
+        
 
     </>
 
