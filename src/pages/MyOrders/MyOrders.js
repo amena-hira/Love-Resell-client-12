@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 import Loading from '../shared/Loading/Loading';
-import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext);
-    const { data: orders = [], isLoading, refetch } = useQuery({
+    const { data: orders = [], isLoading } = useQuery({
         queryKey: ['orders'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/orders?email=${user.email}`,{
@@ -19,29 +18,6 @@ const MyOrders = () => {
             return data;
         }
     });
-    const handlePayment = (order) => {
-        console.log(order._id)
-        fetch(`http://localhost:5000/orders/${order._id}`, {
-            method: 'PUT'
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if (data.modifiedCount > 0) {
-                    fetch(`http://localhost:5000/product/order/${order.productId}`,{
-                        method: 'PUT'
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data)
-                        toast.success(`${order.productName} is successfully paid!`)
-                        refetch();
-                    })
-                    
-                    
-                }
-            })
-    }
     if (isLoading) {
         return <Loading></Loading>
     }
