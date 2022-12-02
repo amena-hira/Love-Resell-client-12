@@ -4,6 +4,9 @@ import Main from "../../layout/Main/Main";
 import SellerLayout from "../../layout/Seller/SellerLayout";
 import AddCategory from "../../pages/AddCategory/AddCategory";
 import AllSellers from "../../pages/Admin/AllSellers/AllSellers";
+import AllUsers from "../../pages/Admin/AllUsers/AllUsers";
+import ReportedItems from "../../pages/Admin/ReportedItems/ReportedItems";
+import Blog from "../../pages/Blog/Blog";
 
 import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
@@ -12,6 +15,7 @@ import Products from "../../pages/Products/Products";
 import Register from "../../pages/Register/Register";
 import AddProduct from "../../pages/Seller/AddProduct/AddProduct";
 import MyProducts from "../../pages/Seller/MyProducts/MyProducts";
+import NotFound from "../../pages/shared/NotFound/NotFound";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import SellerRoute from "../SellerRoute/SellerRoute";
@@ -34,12 +38,8 @@ const routes = createBrowserRouter([
                 element: <Register></Register>
             },
             {
-                path: '/addcategory',
-                element: <AddCategory></AddCategory>
-            },
-            {
-                path: '/product',
-                element: <AddCategory></AddCategory>
+                path: '/blog',
+                element: <Blog></Blog>
             },
             {
                 path: '/products/:id',
@@ -73,8 +73,24 @@ const routes = createBrowserRouter([
             {
                 path: '/admin/allsellers',
                 element:<AdminRoute><AllSellers></AllSellers></AdminRoute>
-            }
+            },
+            {
+                path: '/admin/addcategory',
+                element: <AdminRoute><AddCategory></AddCategory></AdminRoute>
+            },
+            {
+                path: '/admin/allusers',
+                element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+            },
+            {
+                path: '/admin/reporteditems',
+                element: <AdminRoute><ReportedItems></ReportedItems></AdminRoute>
+            },
         ]
+    },
+    {
+        path:'*',
+        element: <NotFound></NotFound>
     }
 ])
 

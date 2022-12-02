@@ -15,6 +15,7 @@ const useSeller = email =>{
             })
         }
     },[email])
+    // console.log('seller and loading in hook: ', isSeller, isSellerLoading)
     return [isSeller, isSellerLoading]
     
 }

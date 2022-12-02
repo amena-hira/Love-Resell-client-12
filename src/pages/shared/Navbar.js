@@ -17,7 +17,8 @@ const Navbar = () => {
     }
     const menulist = <>
         <li><Link to='/'>Home</Link></li>
-        <li><Link to='/addcategory'>Category</Link></li>
+        <li><Link to='/blog'>Blog</Link></li>
+        
         {
             user && !isSeller && !isAdmin &&
             <>
@@ -39,6 +40,7 @@ const Navbar = () => {
                 <li><Link to='/admin/allsellers'>All Sellers</Link></li>
                 <li><Link to='/admin/allusers'>All Users</Link></li>
                 <li><Link to='/admin/reporteditems'>Reported Items</Link></li>
+                <li><Link to='/admin/addcategory'>Add Category</Link></li>
             </>
         }
         

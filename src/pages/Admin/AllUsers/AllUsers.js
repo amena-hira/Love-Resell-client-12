@@ -1,20 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import Loading from '../../shared/Loading/Loading';
 import Modal from '../../shared/Modal/Modal';
 import toast from 'react-hot-toast'; 
+import Loading from '../../shared/Loading/Loading';
 
-const AllSellers = () => {
+const AllUsers = () => {
     const [isDelete, setIsDelete] = useState(null);
     const { data: users = [], isLoading, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users/sellers');
+            const res = await fetch('http://localhost:5000/users');
             const data = await res.json();
             return data;
         }
     });
-
     const handleUserDelete = (user) =>{
         console.log(user)
         fetch(`http://localhost:5000/users/${user._id}`,{
@@ -30,23 +29,10 @@ const AllSellers = () => {
         })
     }
 
-    const handleSellerVerify = (user) =>{
-        console.log(user)
-        fetch(`http://localhost:5000/users/sellers/${user._id}`,{
-            method: 'PUT'
-        })
-        .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if (data.modifiedCount > 0) {
-                    toast.success(`${user.name} is verified!`)
-                    refetch();
-                }
-            })
-    }
     if (isLoading) {
         return <Loading></Loading>
     }
+
     return (
         <div>
             <div className="overflow-x-auto">
@@ -67,24 +53,18 @@ const AllSellers = () => {
                                     <td>{index + 1}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
+                                    <td>{user.status}</td>
                                     <td>
-                                        {
-                                            user.verify ?
-                                            <div className="badge badge-lg bg-pink-600 border-none">Verified</div>
-                                            :
-                                            <label onClick={()=>handleSellerVerify(user)} className="btn btn-sm">Verify</label>
-                                        }
+                                        <label htmlFor='modal' onClick={() => setIsDelete(user)} className={`btn btn-sm btn-error }`}>Delete</label>
                                     </td>
-                                    <td>
-                                        <label htmlFor='modal' onClick={()=> setIsDelete(user)} className="btn btn-sm btn-error ">Delete</label>
-                                    </td>
-                                </tr>)
+                                </tr>
+                                )
                         }
                     </tbody>
                 </table>
             </div>
             <Modal
-                title={`Do you want to delete seller "${isDelete?.name}"?`}
+                title={`Do you want to delete user "${isDelete?.name}"?`}
                 confirmAction={handleUserDelete}
                 successButtonName="Delete"
                 modalData={isDelete}
@@ -93,4 +73,4 @@ const AllSellers = () => {
     );
 };
 
-export default AllSellers;
+export default AllUsers;

@@ -9,7 +9,9 @@ const AdminRoute = ({children}) => {
     const [isAdmin, isAdminLoading] = useAdmin(user?.email)
     const location = useLocation();
     console.log(isAdmin)
-    
+    if (!user) {
+        return <Navigate to="/login" state={{ from: location }} replace></Navigate>
+    }
     if (loading || isAdminLoading) {
         return <Loading></Loading>
     }

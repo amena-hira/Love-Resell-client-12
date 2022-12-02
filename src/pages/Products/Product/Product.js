@@ -1,18 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaCheck } from "react-icons/fa";
 import './Product.css';
+import { CiWarning } from "react-icons/ci";
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../../context/AuthProvider';
 
-const Product = ({ product, setSelectedProduct}) => {
+const Product = ({ product, setSelectedProduct }) => {
     const { _id, image, name, location, resalePrice, originalPrice, useOfYears, postTime, sellerName, email } = product;
     const [isVerify, setIsVerify] = useState(null);
+    const {user} = useContext(AuthContext);
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch(`http://localhost:5000/products/verify?email=${email}`)
-        .then(res=>res.json())
-        .then(data=> {
-            setIsVerify(data.isVerify)
+            .then(res => res.json())
+            .then(data => {
+                setIsVerify(data.isVerify)
+            })
+    }, [email])
+
+    const handleReport = (product) =>{
+        console.log(product);
+        const report = {
+            productId: product._id,
+            productName: product.name,
+            productImage: product.image,
+        }
+        console.log('report: ',report)
+        fetch('http://localhost:5000/reports',{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json', 
+            },
+            body: JSON.stringify(report)
         })
-    },[email])
+        .then(res => res.json())
+        .then(result =>{
+            console.log(result);
+            if (result.acknowledged) {
+                toast.success(`${product.name} is reported to admin!`)
+            }
+            
+        })
+    }
 
 
     return (
@@ -32,6 +61,12 @@ const Product = ({ product, setSelectedProduct}) => {
                                 isVerify &&
                                 <div className='p-1'><FaCheck className='verify-mark'></FaCheck></div>
                             }
+                            {
+                                user && 
+                                <div className='p-1 text-warning tooltip' data-tip="Report" onClick={() => handleReport(product)}>
+                                    <CiWarning></CiWarning>
+                                </div>
+                            }
                         </div>
                         <p>{postTime}</p>
                         <p className='uppercase'>{location}</p>
@@ -43,7 +78,7 @@ const Product = ({ product, setSelectedProduct}) => {
                 <p>Original Price: ${originalPrice}</p>
                 <p>Use of Years: {useOfYears}years</p>
                 <div className="card-actions justify-end">
-                    <label htmlFor='modal' onClick={()=>setSelectedProduct(product)} className="btn border-none bg-red-100 text-black">Book Now</label>
+                    <label htmlFor='modal' onClick={() => setSelectedProduct(product)} className="btn border-none bg-red-100 text-black">Book Now</label>
                 </div>
             </div>
         </div>

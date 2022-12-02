@@ -55,7 +55,7 @@ const MyProducts = () => {
         <div>
             
             <div className="overflow-x-auto">
-                <table className="table w-full">
+                <table className="table w-full text-center">
                     <thead>
                         <tr>
                             <th></th>
@@ -84,7 +84,7 @@ const MyProducts = () => {
                                     product.paid ?
                                     <span className="badge bg-red-100 py-1 border-none text-black">Ordered & Paid</span>
                                     :
-                                    <span className="badge bg-red-200 py-1 border-none">Order or paid not yet</span>
+                                    <span className="badge bg-red-200 py-1 border-none">Available or Unpaid</span>
                                     
                                 }</td>
                                 <td>

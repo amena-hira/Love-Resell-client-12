@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
     const { user } = useContext(AuthContext)
     const { _id, name, resalePrice } = selectedProduct;
+    
     const handleOrder = event => {
         event.preventDefault();
         const form = event.target;

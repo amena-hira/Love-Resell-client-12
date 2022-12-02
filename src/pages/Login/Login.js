@@ -1,14 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
-    const {login } = useContext(AuthContext)
+    const {user, login, googleLogin } = useContext(AuthContext)
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginError, setLoginError] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
+    console.log(from);
+    useEffect(()=>{
+        if (user?.email) {
+            navigate(from, { replace: true });
+        }
+    },[user,navigate,from])
+
+    const handleGoogleLogin = () =>{
+        googleLogin()
+        .then(result => {
+            const user = result.user;
+            console.log(user);
+            
+        })
+        .catch(error => {
+            console.log(error);
+            setLoginError(error.message)
+        })
+    }
     
     const handleLogin =( data ) =>{
         setLoginError('');
@@ -16,7 +38,7 @@ const Login = () => {
         .then(result => {
             const user = result.user;
             console.log(user);
-            navigate('/')
+            
         })
         .catch(error => {
             console.log(error);
@@ -28,7 +50,11 @@ const Login = () => {
         <div className='h-[600px] flex justify-center items-center mx-2'>
             <div className='w-96 px-7 py-12 shadow-xl rounded'>
                 <h2 className='text-4xl text-center'>Login</h2>
-                <div className='flex justify-center items-center'><div className='text-green-800 p-6 text-2xl'><FaGoogle></FaGoogle></div></div>
+                <div className='flex justify-center items-center'>
+                    <div className='text-green-800 p-6 text-2xl'>
+                        <FaGoogle onClick={handleGoogleLogin}></FaGoogle>
+                    </div>
+                </div>
                 <p className='text-center'>Or With</p>
                 {loginError && <p className='text-error'>{loginError}</p>}
                 <form onSubmit={handleSubmit(handleLogin)}>
