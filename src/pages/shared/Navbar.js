@@ -4,23 +4,28 @@ import logo from '../../assets/image/favicon.ico'
 import { AuthContext } from '../../context/AuthProvider';
 import useAdmin from '../../hooks/useAdmin';
 import useSeller from '../../hooks/useSeller';
+import Loading from './Loading/Loading';
 
 const Navbar = () => {
     const {user, logout} = useContext(AuthContext);
-    const [isSeller] =  useSeller(user?.email)
-    const [isAdmin] = useAdmin(user?.email)
+    const [isSeller, isSellerLoading] =  useSeller(user?.email)
+    const [isAdmin, isAdminLoading] = useAdmin(user?.email)
+    
 
     const handleLogout = () =>{
         logout()
         .then(()=>{})
         .catch(error=>console.log(error))
     }
+    if (isSellerLoading || isAdminLoading) {
+        <Loading></Loading>
+    }
     const menulist = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/blog'>Blog</Link></li>
         
         {
-            user && !isSeller && !isAdmin &&
+            user && !isSeller && !isAdmin && 
             <>
                 <li><Link to='/myorders'>My Orders</Link></li>
                 <li><Link to='/mywishlists'>My Wishlist</Link></li>

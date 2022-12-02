@@ -43,6 +43,7 @@ const AddProduct = () => {
                     sellerName: data.sellerName,
                     email: data.email,
                     location: data.location,
+                    phone: data.phone,
                     name: data.name,
                     description: data.description,
                     image: imageData.data.url,
@@ -103,6 +104,17 @@ const AddProduct = () => {
                             })}
                             placeholder="Seller email" className="input input-bordered" defaultValue={user?.email} readOnly/>
                         {errors.email && <p className='text-error'>{errors.email?.message}</p>}
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Mobile Number</span>
+                        </label>
+                        <input type="text"
+                            {...register("phone", {
+                                required: "phone is required"
+                            })}
+                            placeholder="Mobile Number" className="input input-bordered" />
+                        {errors.phone && <p className='text-error'>{errors.phone?.message}</p>}
                     </div>
                     <div className="form-control">
                         <label className="label">
