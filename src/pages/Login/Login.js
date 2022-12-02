@@ -31,7 +31,7 @@ const Login = () => {
                 const user = {
                     name: socialUser.displayName,
                     email: socialUser.email,
-                    status: socialUser.status
+                    status: 'buyer'
                 }
                 saveUser(user);
             })
