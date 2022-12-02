@@ -5,24 +5,24 @@ import useSeller from '../../hooks/useSeller';
 import Loading from '../../pages/shared/Loading/Loading';
 
 const SellerRoute = ({children}) => {
-    const { user, loading, logout } =   useContext(AuthContext);
+    const { user, loading } =   useContext(AuthContext);
     const [isSeller, isSellerLoading] =  useSeller(user?.email)
     const location = useLocation();
-    // console.log(isSeller)
-    console.log('seller loading :',isSellerLoading)
-    if (!user) {
-        return <Navigate to="/login" state={{ from: location }} replace></Navigate>
-    }
-    if (loading || isSellerLoading) {
-        return <Loading></Loading>
-    }
-    
+
     if (user && isSeller) {
         return children;
     }
-    
+    if (loading) {
+        return <Loading></Loading>
+    }
+    if (isSellerLoading) {
+        <Loading></Loading>
+    }
 
-    return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+    if (!user) {
+        return <Navigate to="/login" state={{ from: location }} replace></Navigate>
+    }
+    
 };
 
 export default SellerRoute;

@@ -73,7 +73,7 @@ const routes = createBrowserRouter([
     },
     {
         path:'/admin',
-        element: <AdminRoute><AdminLayout></AdminLayout></AdminRoute>,
+        element: <AdminLayout></AdminLayout>,
         children: [
             {
                 path: '/admin/allsellers',

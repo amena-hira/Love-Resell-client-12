@@ -14,14 +14,12 @@ const Login = () => {
 
     const from = location.state?.from?.pathname || '/';
     console.log(from);
-    if (token) {
-        navigate(from, { replace: true });
-    }
-    // useEffect(() => {
-    //     if (user?.email && token) {
-    //         navigate(from, { replace: true });
-    //     }
-    // }, [user, navigate, from, token])
+    
+    useEffect(() => {
+        if (user?.email) {
+            navigate(from, { replace: true });
+        }
+    }, [user, navigate, from])
 
     const handleGoogleLogin = () => {
         googleLogin()

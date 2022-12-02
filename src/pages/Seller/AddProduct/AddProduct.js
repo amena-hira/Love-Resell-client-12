@@ -215,7 +215,7 @@ const AddProduct = () => {
                                 <option>Select</option>
                             {
                                 categories.map(category =>
-                                <option value={`${category._id}`}>
+                                <option key={category._id} value={`${category._id}`}>
                                     {category.categoryName}
                                 </option>
                                 )
