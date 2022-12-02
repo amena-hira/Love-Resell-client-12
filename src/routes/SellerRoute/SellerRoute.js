@@ -19,9 +19,6 @@ const SellerRoute = ({children}) => {
     if (isSellerLoading) {
         <Loading></Loading>
     }
-    if (user && isSeller) {
-        return children;
-    }
     // if (isSeller === false) {
     //     logout()
     //     navigate('/');
