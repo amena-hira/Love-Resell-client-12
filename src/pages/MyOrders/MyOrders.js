@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 import Loading from '../shared/Loading/Loading';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext);
@@ -68,7 +69,7 @@ const MyOrders = () => {
                                         order.paid ?
                                             <label className="btn btn-sm border-none bg-red-100">Paid</label>
                                             :
-                                            <label onClick={() => handlePayment(order)} className="btn btn-sm border-none bg-pink-800">Pay</label>
+                                            <Link to={`/payment/${order._id}`} className="btn btn-sm border-none bg-pink-800">Pay</Link>
                                     }
                                 </td>
                             </tr>)

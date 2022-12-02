@@ -7,10 +7,10 @@ import AllSellers from "../../pages/Admin/AllSellers/AllSellers";
 import AllUsers from "../../pages/Admin/AllUsers/AllUsers";
 import ReportedItems from "../../pages/Admin/ReportedItems/ReportedItems";
 import Blog from "../../pages/Blog/Blog";
-
 import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
 import MyOrders from "../../pages/MyOrders/MyOrders";
+import Payment from "../../pages/Payment/Payment";
 import Products from "../../pages/Products/Products";
 import Register from "../../pages/Register/Register";
 import AddProduct from "../../pages/Seller/AddProduct/AddProduct";
@@ -49,7 +49,12 @@ const routes = createBrowserRouter([
             {
                 path: '/myOrders',
                 element: <PrivateRoute><MyOrders></MyOrders></PrivateRoute>
-            }
+            },
+            {
+                path: '/payment/:id',
+                loader:({params}) => fetch(`http://localhost:5000/order/payment/${params.id}`),
+                element: <PrivateRoute><Payment></Payment></PrivateRoute>
+            },
         ]
     },
     {
