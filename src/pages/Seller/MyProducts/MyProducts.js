@@ -36,8 +36,11 @@ const MyProducts = () => {
     }
     const handleAdvertiseStatus = product =>{
         console.log(product)
-        fetch(`http://localhost:5000/product/advertise/${product?._id}`, {
-            method: 'PUT'
+        fetch(`http://localhost:5000/product/advertise/${product?._id}?email=${user?.email}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
         })
             .then(res => res.json())
             .then(data => {
@@ -69,7 +72,7 @@ const MyProducts = () => {
                     </thead>
                     <tbody>
                         {
-                            products.map((product, i) => <tr key={i}>
+                            products.map((product, i) => <tr key={product._id}>
                                 <th>{i + 1}</th>
                                 <td>
                                     <div className="avatar">
@@ -82,20 +85,26 @@ const MyProducts = () => {
                                 <td>{product.resalePrice}</td>
                                 <td>{
                                     product.paid ?
-                                    <span className="badge bg-red-100 py-1 border-none text-black">Ordered & Paid</span>
+                                    <label className="btn btn-sm bg-red-100 border-none hover:bg-red-100 text-white">Ordered & Paid</label>
                                     :
-                                    <span className="badge bg-red-200 py-1 border-none">Available or Unpaid</span>
+                                    <label className="btn btn-sm bg-pink-700 border-none hover:bg-pink-900 text-white">Available or Unpaid</label>
                                     
                                 }</td>
                                 <td>
                                     {product.availableStatus==='sold' ?
-                                        <label className="text-pink-700 text-center uppercase text-xl">{product.availableStatus}</label>
+                                        <label className="btn btn-sm bg-red-100 border-none hover:bg-red-100 text-white">{product.availableStatus}</label>
                                         :
                                         <label onClick={() => setAvailableStatusProduct(product)} htmlFor="modal" className="btn btn-sm bg-pink-700 border-none hover:bg-pink-900 text-white">{product.availableStatus}</label>
                                     }
 
                                 </td>
-                                <td><label onClick={() => handleAdvertiseStatus(product)} className="btn btn-sm bg-pink-900 border-none hover:bg-pink-600 text-white">Advertise</label></td>
+                                <td>
+                                    {product.advertise ?
+                                        <label className="btn btn-sm bg-red-100 border-none hover:bg-red-100 text-white">Advertised</label>
+                                        :
+                                        <label onClick={() => handleAdvertiseStatus(product)} className="btn btn-sm bg-pink-900 border-none hover:bg-pink-600 text-white">Advertise</label>
+                                    }
+                                    </td>
                             </tr>)
                         }
 

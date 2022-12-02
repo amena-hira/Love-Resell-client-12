@@ -4,11 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 
 const Register = () => {
-    const { createUser, logout, updateUserProfile } = useContext(AuthContext)
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { createUser, updateUserProfile } = useContext(AuthContext)
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const [registerError, setRegisterError] = useState('');
     const navigate = useNavigate();
-
+    const [token, setToken] = useState('');
 
     const handleRegister = (data) => {
         console.log(data);
@@ -21,38 +21,50 @@ const Register = () => {
                     email: data.email,
                     status: data.status
                 }
-                console.log('inside firebase result: ', user)
-                fetch('http://localhost:5000/users', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify(user)
-                })
-                    .then(res => res.json())
-                    .then(result => {
-                        console.log(result);
-                        if (result.acknowledged) {
-                            logout()
-                            navigate('/login');
-                        }
-                    })
                 const profile = {
                     displayName: data.name
                 }
                 updateUserProfile(profile)
-                .then(() => {})
-                .catch(error=>console.log(error))
-                
-
-
+                    .then(() => {
+                        reset(data)
+                    })
+                    .catch(error => console.log(error))
+                    saveUser(user)
             })
             .catch(error => {
                 console.log(error);
                 setRegisterError(error.message)
             })
-
     }
+
+    const saveUser = (user) => {
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                saveJWTToken(user?.email)
+                navigate('/')
+            })
+    }
+
+    const saveJWTToken = (email) => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.accessToken) {
+                    localStorage.setItem('accessToken', data.accessToken)
+                    setToken(data.accessToken)
+                }
+            })
+    }
+
+
     return (
         <div className='h-[600px] flex justify-center items-center mx-2'>
             <div className='w-96 px-7 py-12 shadow-xl rounded'>
@@ -89,16 +101,16 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text">Status</span>
                         </label>
-                        <div className='flex justify-around'>
+                        <div className='flex '>
                             <>
                                 <input type="radio"
                                     {...register("status")}
-                                    defaultValue='buyer' className="radio radio-primary" checked /><label htmlFor="">Buyer</label>
+                                    value='buyer' className="radio radio-primary mr-1" defaultChecked /><label htmlFor=""></label><span className='mr-10' >Buyer</span>
                             </>
                             <>
                                 <input type="radio"
                                     {...register("status")}
-                                    defaultValue='seller' className="radio radio-primary" /><label htmlFor="">Seller</label>
+                                    value='seller' className="radio radio-primary mr-1" /><label htmlFor=""></label><span>Seller</span>
                             </>
                         </div>
 

@@ -5,46 +5,79 @@ import { AuthContext } from '../../context/AuthProvider';
 import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
-    const {user, login, googleLogin } = useContext(AuthContext)
+    const { user, login, googleLogin } = useContext(AuthContext)
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginError, setLoginError] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
+    const [token, setToken] = useState('');
 
     const from = location.state?.from?.pathname || '/';
     console.log(from);
-    useEffect(()=>{
-        if (user?.email) {
-            navigate(from, { replace: true });
-        }
-    },[user,navigate,from])
-
-    const handleGoogleLogin = () =>{
-        googleLogin()
-        .then(result => {
-            const user = result.user;
-            console.log(user);
-            
-        })
-        .catch(error => {
-            console.log(error);
-            setLoginError(error.message)
-        })
+    if (token) {
+        navigate(from, { replace: true });
     }
-    
-    const handleLogin =( data ) =>{
+    // useEffect(() => {
+    //     if (user?.email && token) {
+    //         navigate(from, { replace: true });
+    //     }
+    // }, [user, navigate, from, token])
+
+    const handleGoogleLogin = () => {
+        googleLogin()
+            .then(result => {
+                const socialUser = result.user;
+                console.log(socialUser);
+                const user = {
+                    name: socialUser.displayName,
+                    email: socialUser.email,
+                    status: socialUser.status
+                }
+                saveUser(user);
+            })
+            .catch(error => {
+                console.log(error);
+                setLoginError(error.message)
+            })
+    }
+
+    const handleLogin = (data) => {
         setLoginError('');
         login(data.email, data.password)
-        .then(result => {
-            const user = result.user;
-            console.log(user);
-            
-        })
-        .catch(error => {
-            console.log(error);
-            setLoginError(error.message)
-        })
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                saveJWTToken(user.email)
+            })
+            .catch(error => {
+                console.log(error);
+                setLoginError(error.message)
+            })
 
+    }
+    const saveUser = (user) => {
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                saveJWTToken(user?.email)
+            })
+    }
+    const saveJWTToken = (email) => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.accessToken) {
+                    localStorage.setItem('accessToken', data.accessToken)
+                    setToken(data.accessToken)
+                }
+            })
     }
     return (
         <div className='h-[600px] flex justify-center items-center mx-2'>
@@ -64,10 +97,10 @@ const Login = () => {
                         </label>
                         <input type="email"
                             {...register(
-                                "email", 
+                                "email",
                                 { required: "Email is required" }
-                            )} 
-                            className="input input-bordered w-full max-w-xl" 
+                            )}
+                            className="input input-bordered w-full max-w-xl"
                         />
                         {errors.email && <p className='text-error' role="alert">{errors.email?.message}</p>}
                     </div>
@@ -75,26 +108,27 @@ const Login = () => {
                         <label className="label">
                             <span className="label-text">Password</span>
                         </label>
-                        <input type="password" 
+                        <input type="password"
                             {...register(
                                 "password",
-                                { required: "Password is required" ,
-                                minLength: { value: 6, message: "Password must be 6 characters" }
-                            })
-                            } 
+                                {
+                                    required: "Password is required",
+                                    minLength: { value: 6, message: "Password must be 6 characters" }
+                                })
+                            }
                             className="input input-bordered w-full max-w-xl" />
-                            {errors.password && <p className='text-error' role="alert">{errors.password?.message}</p>}
-                            
+                        {errors.password && <p className='text-error' role="alert">{errors.password?.message}</p>}
+
                         <label className="label">
                             <span className="label-text">Forget Password?</span>
                         </label>
                     </div>
-                    <input type='submit' className="mt-4 btn bg-pink-700 border-none hover:bg-pink-900 text-white w-full max-w-xl"  value="Login" />
-                    
+                    <input type='submit' className="mt-4 btn bg-pink-700 border-none hover:bg-pink-900 text-white w-full max-w-xl" value="Login" />
+
                 </form>
                 <p className='text-center my-4'>Don't have an account?<Link to='/register' className='btn-link text-pink-400'>Register</Link></p>
-                
-                
+
+
             </div>
         </div>
     );

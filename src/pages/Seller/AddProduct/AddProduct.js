@@ -212,6 +212,7 @@ const AddProduct = () => {
                         <select {...register("category", {
                                 required: "Product category is required"
                             })} className="select select-bordered">
+                                <option>Select</option>
                             {
                                 categories.map(category =>
                                 <option value={`${category._id}`}>
