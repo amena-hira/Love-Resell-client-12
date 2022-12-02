@@ -38,7 +38,7 @@ const Navbar = () => {
             isAdmin && user &&
             <>
                 <li><Link to='/admin/allsellers'>All Sellers</Link></li>
-                <li><Link to='/admin/allusers'>All Users</Link></li>
+                <li><Link to='/admin/allbuyers'>All Buyers</Link></li>
                 <li><Link to='/admin/reporteditems'>Reported Items</Link></li>
                 <li><Link to='/admin/addcategory'>Add Category</Link></li>
             </>

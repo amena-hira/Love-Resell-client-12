@@ -49,6 +49,7 @@ const AllUsers = () => {
                     <tbody>
                         {
                             users.map((user, index) =>
+                            user.status==='buyer' &&
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{user.name}</td>

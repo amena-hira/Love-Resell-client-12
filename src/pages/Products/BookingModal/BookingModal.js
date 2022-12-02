@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 
 const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
     const { user } = useContext(AuthContext)
-    const { _id, name, resalePrice } = selectedProduct;
+    const { _id, name, resalePrice, image } = selectedProduct;
     
     const handleOrder = event => {
         event.preventDefault();
@@ -18,6 +18,7 @@ const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
         const meetLocation = form.meetLocation.value;
         const order = {
             productId,
+            productImage: image,
             productName,
             productPrice,
             buyerName,

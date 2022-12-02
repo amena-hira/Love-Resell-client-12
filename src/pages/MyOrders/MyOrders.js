@@ -28,6 +28,7 @@ const MyOrders = () => {
                     <thead>
                         <tr>
                             <th></th>
+                            <th>Product Image</th>
                             <th>Product Name</th>
                             <th>Product Price</th>
                             <th>Payment Status</th>
@@ -38,6 +39,7 @@ const MyOrders = () => {
                             orders.length>0 &&
                             orders.map((order, i) => <tr className='hover' key={i}>
                                 <th>{i + 1}</th>
+                                <td><div className='flex justify-center'><img src={order.productImage} alt="" style={{width: '70px', height: '70px'}} /></div></td>
                                 <td>{order.productName}</td>
                                 <td>${order.productPrice}</td>
                                 <td>

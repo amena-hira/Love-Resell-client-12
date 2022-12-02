@@ -44,7 +44,7 @@ const routes = createBrowserRouter([
             {
                 path: '/products/:id',
                 loader:({params}) => fetch(`http://localhost:5000/products/category/${params.id}`),
-                element: <Products></Products>
+                element: <PrivateRoute><Products></Products></PrivateRoute>
             },
             {
                 path: '/myOrders',
@@ -84,7 +84,7 @@ const routes = createBrowserRouter([
                 element: <AdminRoute><AddCategory></AddCategory></AdminRoute>
             },
             {
-                path: '/admin/allusers',
+                path: '/admin/allbuyers',
                 element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
             },
             {

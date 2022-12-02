@@ -99,10 +99,11 @@ const MyProducts = () => {
 
                                 </td>
                                 <td>
-                                    {product.advertise ?
-                                        <label className="btn btn-sm bg-red-100 border-none hover:bg-red-100 text-white">Advertised</label>
+                                    
+                                    {product.advertise || product.paid ?
+                                        <label className={`btn btn-sm bg-red-100 border-none hover:bg-red-100 text-white disabled`}>Advertised</label>
                                         :
-                                        <label onClick={() => handleAdvertiseStatus(product)} className="btn btn-sm bg-pink-900 border-none hover:bg-pink-600 text-white">Advertise</label>
+                                        <label onClick={() => handleAdvertiseStatus(product)} className={`btn btn-sm bg-pink-900 border-none hover:bg-pink-600 text-white`}>Advertise</label>
                                     }
                                     </td>
                             </tr>)
