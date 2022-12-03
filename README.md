@@ -1,3 +1,17 @@
+# Project Name - "Love Resell"
+# Live Site Link - https://love-resell-client.web.app/
+# Features & Functions
+
+* Anyone can book product from any category and product
+* Advertise item show on advertise section
+* Seller can added their product 
+* Seller add product to advertise
+* Seller add to sold to available product
+* Admin can delete any sellers and users
+* Admin can see reported items which product reported
+* After buyer paid then seller can see the product paid and order
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

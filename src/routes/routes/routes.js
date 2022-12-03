@@ -43,7 +43,7 @@ const routes = createBrowserRouter([
             },
             {
                 path: '/category/:id',
-                loader:({params}) => fetch(`http://localhost:5000/products/category/${params.id}`),
+                loader:({params}) => fetch(`https://love-resell-server.vercel.app/products/category/${params.id}`),
                 element: <PrivateRoute><Products></Products></PrivateRoute>
             },
             {
@@ -52,7 +52,7 @@ const routes = createBrowserRouter([
             },
             {
                 path: '/payment/:id',
-                loader:({params}) => fetch(`http://localhost:5000/order/payment/${params.id}`),
+                loader:({params}) => fetch(`https://love-resell-server.vercel.app/order/payment/${params.id}`),
                 element: <PrivateRoute><Payment></Payment></PrivateRoute>
             },
         ]

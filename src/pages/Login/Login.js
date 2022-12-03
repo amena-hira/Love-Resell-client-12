@@ -54,7 +54,7 @@ const Login = () => {
 
     }
     const saveUser = (user) => {
-        fetch('http://localhost:5000/users', {
+        fetch('https://love-resell-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -68,7 +68,7 @@ const Login = () => {
             })
     }
     const saveJWTToken = (email) => {
-        fetch(`http://localhost:5000/jwt?email=${email}`)
+        fetch(`https://love-resell-server.vercel.app/jwt?email=${email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.accessToken) {

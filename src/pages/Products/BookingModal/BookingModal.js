@@ -27,7 +27,7 @@ const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
             meetLocation,
             paid: false
         }
-        fetch('http://localhost:5000/orders', {
+        fetch('https://love-resell-server.vercel.app/orders', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

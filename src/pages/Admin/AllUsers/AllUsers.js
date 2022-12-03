@@ -9,14 +9,14 @@ const AllUsers = () => {
     const { data: users = [], isLoading, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users');
+            const res = await fetch('https://love-resell-server.vercel.app/users');
             const data = await res.json();
             return data;
         }
     });
     const handleUserDelete = (user) =>{
         console.log(user)
-        fetch(`http://localhost:5000/users/${user._id}`,{
+        fetch(`https://love-resell-server.vercel.app/users/${user._id}`,{
             method: 'DELETE'
         })
         .then(res => res.json())

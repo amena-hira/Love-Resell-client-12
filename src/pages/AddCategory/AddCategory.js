@@ -23,7 +23,7 @@ const AddCategory = () => {
                     categoryName: data.name,
                     image: imageData.data.url
                 }
-                fetch('http://localhost:5000/category',{
+                fetch('https://love-resell-server.vercel.app/category',{
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json', 

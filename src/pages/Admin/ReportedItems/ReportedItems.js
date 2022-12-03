@@ -9,7 +9,7 @@ const ReportedItems = () => {
     const { data: reports = [], isLoading, refetch } = useQuery({
         queryKey: ['reports'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/reports');
+            const res = await fetch('https://love-resell-server.vercel.app/reports');
             const data = await res.json();
             return data;
         }
@@ -17,7 +17,7 @@ const ReportedItems = () => {
     console.log(reports)
 
     const handleReportDelete = (report) => {
-        fetch(`http://localhost:5000/reports/${report._id}`, {
+        fetch(`https://love-resell-server.vercel.app/reports/${report._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

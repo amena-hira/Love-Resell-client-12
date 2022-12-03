@@ -11,7 +11,7 @@ const Product = ({ product, setSelectedProduct }) => {
     const {user} = useContext(AuthContext);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/products/verify?email=${email}`)
+        fetch(`https://love-resell-server.vercel.app/products/verify?email=${email}`)
             .then(res => res.json())
             .then(data => {
                 setIsVerify(data.isVerify)
@@ -26,7 +26,7 @@ const Product = ({ product, setSelectedProduct }) => {
             productImage: product.image,
         }
         console.log('report: ',report)
-        fetch('http://localhost:5000/reports',{
+        fetch('https://love-resell-server.vercel.app/reports',{
             method: 'POST',
             headers: {
                 'content-type': 'application/json', 

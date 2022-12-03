@@ -14,7 +14,7 @@ const AddProduct = () => {
     const [categories, setCategories] = useState([]);
 
     useEffect(()=>{
-        Axios.get('http://localhost:5000/category')
+        Axios.get('https://love-resell-server.vercel.app/category')
         .then(res => {
             console.log("axios: ",res.data);
             setCategories(res.data)
@@ -55,7 +55,7 @@ const AddProduct = () => {
                     postTime: date,
                     availableStatus: 'available',
                 }
-                fetch(`http://localhost:5000/products?email=${user.email}`,{
+                fetch(`https://love-resell-server.vercel.app/products?email=${user.email}`,{
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json', 

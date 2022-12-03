@@ -12,7 +12,7 @@ const MyProducts = () => {
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/products/seller?email=${user?.email}`);
+            const res = await fetch(`https://love-resell-server.vercel.app/products/seller?email=${user?.email}`);
             const data = await res.json();
             console.log(data);
             return data;
@@ -20,7 +20,7 @@ const MyProducts = () => {
     });
     const handleAvailableStatus = product => {
         console.log(product)
-        fetch(`http://localhost:5000/products/${product?._id}`, {
+        fetch(`https://love-resell-server.vercel.app/products/${product?._id}`, {
             method: 'PUT'
         })
             .then(res => res.json())
@@ -36,7 +36,7 @@ const MyProducts = () => {
     }
     const handleAdvertiseStatus = product =>{
         console.log(product)
-        fetch(`http://localhost:5000/product/advertise/${product?._id}?email=${user?.email}`, {
+        fetch(`https://love-resell-server.vercel.app/product/advertise/${product?._id}?email=${user?.email}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
