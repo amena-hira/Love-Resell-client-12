@@ -11,6 +11,10 @@
 * Admin can see reported items which product reported
 * After buyer paid then seller can see the product paid and order
 
+adminEmail: admin@gmail.com
+
+adminPassword: 123456
+
 
 # Getting Started with Create React App
 
